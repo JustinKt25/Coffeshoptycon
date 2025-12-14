@@ -65,4 +65,41 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
+    public void StartNextday()
+    {
+
+        float priceFactor = 10f / currentPrice;
+        int potentialCustomers = Mathf.FloorToInt(BASE_DEMAND * priceFactor);
+        if (potentialCustomers < 1) potentialCustomers = 1;
+
+
+        int salesMade = Mathf.Min(potentialCustomers, coffeeStock);
+
+
+        int revenue = salesMade * currentPrice;
+
+        currentMoney += revenue;
+        coffeeStock -= salesMade; 
+        currentDay++;
+
+        string summary = $"--- Hari {currentDay - 1} Selesai ---\n" +
+                         $"Datang: {potentialCustomers} Pelanggan | Terjual: {salesMade} Kopi\n" +
+                         $"Pendapatan Hari Ini: ${revenue}";
+        summaryText.text = summary;
+
+        CheckGameOver();
+        UpdateUI();
+    }
+
+    public void CheckGameOver()
+    {
+        
+        if (currentMoney <= 0 && coffeeStock <= 0 && currentDay > 1)
+        {
+            summaryText.text = $"GAME OVER! Anda bangkrut di Hari ke-{currentDay}!\nUang Akhir: ${currentMoney}";
+            inputPanel.SetActive(false); 
+                                         
+            Time.timeScale = 0; 
+        }
+    }
 }
