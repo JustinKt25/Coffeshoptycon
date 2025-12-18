@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         UpdateUI();
-        summaryText.text = "Selamat datang di Kedai Kopi Mini Anda!";
+        summaryText.text = "Selamat datang di Rachel's coffe shop!";
     }
 
     public void UpdateUI()
